@@ -5,8 +5,8 @@ const responseHandler = require("../helpers/responseHandler");
 const addBid = async (req, res) => {
   try {
     const { productId, userId, amount } = req.body;
-    const data = await biddingService.addBid(productId, userId, amount);
-    responseHandler(res, data, "Product bid added successfully");
+    const result = await biddingService.addBid(productId, userId, amount);
+    responseHandler(res, result.data, result.message);
   } catch (err) {
     console.log(err);
     errorHandler(res, err);

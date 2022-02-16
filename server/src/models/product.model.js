@@ -9,6 +9,7 @@ const productSchema = new Schema(
     minimumBidAmount: Number,
     image: String,
     closeDate: Date,
+    lastBidAmount: Number,
   },
   {
     timestamps: true,
