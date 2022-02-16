@@ -3,11 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Modal from "../components/Modal";
 import PlaceBidModal from "../components/PlaceBidModal";
+import BiddingService from "../services/bidding";
 import ProductService from "../services/product";
+import useUser from "../components/useUser";
 
 const ProductDetail = (props) => {
+  console.log(props);
   const { slug } = useParams();
+  const { user } = useUser();
   const [product, setProduct] = useState({});
+  const [maxBid, setMaxBid] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   const hideModal = () => {
@@ -18,6 +23,17 @@ const ProductDetail = (props) => {
     ProductService.getProductBySlug(slug)
       .then((response) => {
         setProduct(response.data.data);
+        getMaxBid(response.data.data._id);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const getMaxBid = (productId) => {
+    BiddingService.getMaxBidById(productId)
+      .then((response) => {
+        setMaxBid(response.data.data);
       })
       .catch((e) => {
         console.log(e);
@@ -84,11 +100,11 @@ const ProductDetail = (props) => {
                 <h5 className="mt-5">Details</h5>
                 <p className="text-muted">{product.description}</p>
                 <div className="row mt-4">
-                  <div className="col-4">
+                  <div className="col-5">
                     <span>Last bid made</span>
-                    <p className="fs-3">$10</p>
+                    <p className="fs-3">${product.lastBidAmount}</p>
                   </div>
-                  <div className="col-8 text-end">
+                  <div className="col-7 text-end">
                     <span>Available Until</span>
                     <p className="fs-3">
                       {timerComponents.length ? (
@@ -102,9 +118,14 @@ const ProductDetail = (props) => {
                 <div className="row mt-4">
                   <div className="col">
                     <button
+                      disabled={maxBid?.userId === user.userId}
                       className="btn btn-primary w-100 mb-3"
                       onClick={() => {
-                        setShowModal(true);
+                        if (maxBid?.userId === user.userId) {
+                          return alert("You are the highest bidder");
+                        } else {
+                          setShowModal(true);
+                        }
                       }}
                     >
                       Place a bid
@@ -133,7 +154,7 @@ const ProductDetail = (props) => {
       <Modal show={showModal}>
         <PlaceBidModal
           handleClose={hideModal}
-          minimumBidAmount={product.minimumBidAmount}
+          minimumBidAmount={product.lastBidAmount ?? product.minimumBidAmount}
         />
       </Modal>
     </>
