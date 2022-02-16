@@ -30,6 +30,50 @@ const login = async (email, password) => {
   }
 };
 
+const updateSettings = async ({ userId, maxBidAmount, bidAlertPercentage }) => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw Object.assign(new Error("Bad Request"), {
+      response: {
+        status: 404,
+        data: {
+          error: {
+            message: `User not found`,
+          },
+        },
+      },
+    });
+  }
+
+  const response = await user.updateOne({
+    maxBidAmount,
+    bidAlertPercentage,
+  });
+
+  if (!response.modifiedCount) {
+    throw Object.assign(new Error("Bad Request"), {
+      response: {
+        status: 400,
+        data: {
+          error: {
+            message: `User auto-bidding settings not updated`,
+          },
+        },
+      },
+    });
+  }
+
+  return {
+    data: {
+      user: {
+        maxBidAmount,
+        bidAlertPercentage,
+      },
+    },
+  };
+};
+
 module.exports = {
   login,
+  updateSettings,
 };

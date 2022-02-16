@@ -147,51 +147,8 @@ const autoBidding = async (userId, productId) => {
   return { data, message: "Product bid added successfully" };
 };
 
-const configureAutoBidding = async (
-  userId,
-  maxBidAmount,
-  bidAlertPercentage
-) => {
-  const user = await User.findById(userId);
-  if (!user) {
-    throw Object.assign(new Error("Bad Request"), {
-      response: {
-        status: 404,
-        data: {
-          error: {
-            message: `User not found`,
-          },
-        },
-      },
-    });
-  }
-
-  const response = await user.updateOne({
-    maxBidAmount,
-    bidAlertPercentage,
-  });
-
-  if (!response.modifiedCount) {
-    throw Object.assign(new Error("Bad Request"), {
-      response: {
-        status: 400,
-        data: {
-          error: {
-            message: `User auto-bidding settings not updated`,
-          },
-        },
-      },
-    });
-  }
-
-  return {
-    data: {},
-  };
-};
-
 module.exports = {
   addBid,
   autoBidding,
   activateAutoBidding,
-  configureAutoBidding,
 };

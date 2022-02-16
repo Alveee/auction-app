@@ -3,6 +3,7 @@ const {
   productController,
   biddingController,
   authController,
+  userController,
 } = require("../controllers");
 
 const router = express.Router();
@@ -19,8 +20,6 @@ router.route("/products/:slug/bids").post(biddingController.addBid);
 router
   .route("/products/:slug/activate/auto-bidding")
   .post(biddingController.activateAutoBidding);
-router
-  .route("/users/auto-bidding/configure")
-  .put(biddingController.configureAutoBidding);
+router.route("/users/profile/settings").put(userController.updateSettings);
 
 module.exports = router;
