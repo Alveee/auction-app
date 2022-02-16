@@ -12,6 +12,12 @@ const BiddingService = {
   activateAutoBidding(productId, userId) {
     return http.post(`/products/activate/auto-bidding`, { productId, userId });
   },
+
+  getAutoBiddingStatus(productId, userId) {
+    return http.get(
+      `/products/activate/auto-bidding?productId=${productId}&userId=${userId}`
+    );
+  },
 };
 
 export default BiddingService;

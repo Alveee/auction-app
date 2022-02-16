@@ -6,6 +6,8 @@ import PlaceBidModal from "../components/PlaceBidModal";
 import BiddingService from "../services/bidding";
 import ProductService from "../services/product";
 import useUser from "../components/useUser";
+import ActivateAutoBidding from "../components/ActivateAutoBidding";
+import Timer from "../components/Timer";
 
 const ProductDetail = (props) => {
   const { slug } = useParams();
@@ -13,24 +15,37 @@ const ProductDetail = (props) => {
   const [product, setProduct] = useState({});
   const [maxBid, setMaxBid] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [isAutoBiddingEnabled, setAutoBidding] = useState(false);
 
   const hideModal = () => {
     setShowModal(false);
   };
 
   const getProduct = () => {
-    ProductService.getProductBySlug(slug)
+    return ProductService.getProductBySlug(slug)
       .then((response) => {
         setProduct(response.data.data);
         getMaxBid(response.data.data._id);
+        getAutoBiddingStatus(response.data.data._id);
       })
       .catch((e) => {
         console.log(e);
       });
   };
 
+  const getAutoBiddingStatus = (productId) => {
+    return BiddingService.getAutoBiddingStatus(productId, user.userId)
+      .then((response) => {
+        setAutoBidding(response.data.data.isAutoBiddingEnabled);
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  };
+
   const getMaxBid = (productId) => {
-    BiddingService.getMaxBidById(productId)
+    return BiddingService.getMaxBidById(productId)
       .then((response) => {
         setMaxBid(response.data.data);
       })
@@ -39,47 +54,27 @@ const ProductDetail = (props) => {
       });
   };
 
-  const calculateTimeLeft = () => {
-    let difference = +new Date(product.closeDate) - +new Date();
-
-    let timeLeft = {};
-
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
-    return timeLeft;
+  const activateAutoBidding = (productId, userId) => {
+    return BiddingService.activateAutoBidding(productId, userId)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const handleActive = (e) => {
+    e.preventDefault();
+    activateAutoBidding(product._id, user.userId).then((response) => {
+      setAutoBidding(response.data.data.isAutoBiddingEnabled);
+    });
+  };
 
   useEffect(() => {
     getProduct();
   }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-    return () => clearTimeout(timer);
-  });
-
-  const timerComponents = [];
-  Object.keys(timeLeft).forEach((interval, index) => {
-    if (!timeLeft[interval]) {
-      return;
-    }
-
-    timerComponents.push(
-      <span key={index}>
-        {timeLeft[interval]} {interval === "seconds" ? "" : ": "}
-      </span>
-    );
-  });
 
   return (
     <>
@@ -104,14 +99,7 @@ const ProductDetail = (props) => {
                     <p className="fs-3">${product.lastBidAmount}</p>
                   </div>
                   <div className="col-7 text-end">
-                    <span>Available Until</span>
-                    <p className="fs-3">
-                      {timerComponents.length ? (
-                        timerComponents
-                      ) : (
-                        <span>Bidding is closed!</span>
-                      )}
-                    </p>
+                    <Timer closeDate={product.closeDate} />
                   </div>
                 </div>
                 <div className="row mt-4">
@@ -129,20 +117,10 @@ const ProductDetail = (props) => {
                     >
                       Place a bid
                     </button>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value=""
-                        id="defaultCheck1"
-                      />
-                      <label className="form-check-label">
-                        Activate the{" "}
-                        <Link to="/user/profile/settings">
-                          <u>auto-bidding</u>
-                        </Link>
-                      </label>
-                    </div>
+                    <ActivateAutoBidding
+                      active={isAutoBiddingEnabled}
+                      handleChange={handleActive}
+                    />
                   </div>
                 </div>
               </div>
