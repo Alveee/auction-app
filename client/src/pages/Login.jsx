@@ -1,33 +1,65 @@
-import React from "react";
-import './../scss/login.scss';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import "./../scss/login.scss";
+import AuthService from "../services/auth";
 
-const Login = () => {
-    return (
-        <div className="container">
-            <main className="form-signin text-center">
-                <form>
-                    <h1 className="h3 fw-normal">Auction App</h1>
-                    <span className="text-muted mb-3"><small>Please sign in</small></span>
+const Login = ({ setUser }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-                    <div className="form-floating">
-                        <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-                        <label for="floatingInput">Email address</label>
-                    </div>
-                    <div className="form-floating">
-                        <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
-                        <label for="floatingPassword">Password</label>
-                    </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    AuthService.login({ email, password }).then((response) => {
+      console.log(response);
+      setUser(response.data.data);
+    });
+  };
+  return (
+    <div className="container">
+      <main className="form-signin text-center">
+        <form onSubmit={handleSubmit}>
+          <h1 className="h3 fw-normal">Auction App</h1>
+          <span className="text-muted mb-3">
+            <small>Please sign in</small>
+          </span>
 
-                    <div className="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" value="remember-me" /> Remember me
-                        </label>
-                    </div>
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                </form>
-            </main>
-        </div>
-    );
-}
+          <div className="form-floating">
+            <input
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div className="form-floating">
+            <input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+            />
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <div className="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me" /> Remember me
+            </label>
+          </div>
+          <button className="w-100 btn btn-lg btn-primary" type="submit">
+            Sign in
+          </button>
+        </form>
+      </main>
+    </div>
+  );
+};
+
+Login.propTypes = {
+  setUser: PropTypes.func.isRequired,
+};
 
 export default Login;
