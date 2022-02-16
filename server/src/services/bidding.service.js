@@ -46,6 +46,32 @@ const addBid = async (productId, userId, amount) => {
   }
 };
 
+const getMaxBid = async (productId) => {
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      throw new Error("Product not foud");
+    }
+
+    const res = await Bidding.find({ productId }).sort({ amount: -1 }).limit(1);
+    return {
+      data: res[0],
+      message: "Retrieve max bid successfully",
+    };
+  } catch (err) {
+    throw Object.assign(new Error("Bad Request"), {
+      response: {
+        status: 404,
+        data: {
+          error: {
+            message: err.message,
+          },
+        },
+      },
+    });
+  }
+};
+
 const activateAutoBidding = async (userId, productId) => {
   const user = await User.findById(userId);
   if (!user) {
@@ -149,6 +175,7 @@ const autoBidding = async (userId, productId) => {
 
 module.exports = {
   addBid,
+  getMaxBid,
   autoBidding,
   activateAutoBidding,
 };
