@@ -10,7 +10,6 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     AuthService.login({ email, password }).then((response) => {
-      console.log(response);
       setUser(response.data.data);
     });
   };
@@ -31,7 +30,7 @@ const Login = ({ setUser }) => {
               id="floatingInput"
               placeholder="name@example.com"
             />
-            <label for="floatingInput">Email address</label>
+            <label>Email address</label>
           </div>
           <div className="form-floating">
             <input
@@ -41,7 +40,7 @@ const Login = ({ setUser }) => {
               id="floatingPassword"
               placeholder="Password"
             />
-            <label for="floatingPassword">Password</label>
+            <label>Password</label>
           </div>
 
           <div className="checkbox mb-3">

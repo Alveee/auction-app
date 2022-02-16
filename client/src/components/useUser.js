@@ -14,8 +14,14 @@ export default function useUser() {
     setUser(user);
   };
 
+  const removeUser = () => {
+    sessionStorage.removeItem("user");
+    setUser("");
+  };
+
   return {
     setUser: saveUser,
     user,
+    removeUser,
   };
 }

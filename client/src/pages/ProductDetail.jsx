@@ -118,7 +118,7 @@ const ProductDetail = (props) => {
                       />
                       <label className="form-check-label">
                         Activate the{" "}
-                        <Link to="/settings">
+                        <Link to="/user/profile/settings">
                           <u>auto-bidding</u>
                         </Link>
                       </label>
