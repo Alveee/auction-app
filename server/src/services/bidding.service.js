@@ -2,23 +2,37 @@ const { Product, User } = require("../models");
 const Bidding = require("../models/bidding.model");
 
 const addBid = async (productId, userId, amount) => {
+  let status;
   try {
     const product = await Product.findById(productId);
     if (!product) {
+      status = 404;
       throw new Error("Product not foud");
     }
 
     if (new Date(product.closeDate).getTime() < new Date().getTime()) {
+      status = 400;
       throw new Error("Product bidding is closed");
     }
 
-    const bid = await Bidding.findOne({ productId, userId });
-    if (bid?.amount > amount || product.minimumBidAmount > amount) {
+    let maxBid;
+    await getMaxBid(productId).then((response) => {
+      maxBid = response.data;
+    });
+
+    if (maxBid?.userId === userId) {
+      status = 400;
+      throw new Error("You are the highest bidder.");
+    }
+    if (maxBid?.amount > amount || product.minimumBidAmount > amount) {
+      status = 400;
       throw new Error("Bidding amount must be higher than last bid amount");
     }
 
     let message = "Product bid added successfully";
     await product.updateOne({ lastBidAmount: amount });
+
+    const bid = await Bidding.findOne({ productId, userId });
     if (bid) {
       const response = await bid.updateOne({ amount });
       if (response.modifiedCount) {
@@ -35,7 +49,7 @@ const addBid = async (productId, userId, amount) => {
   } catch (err) {
     throw Object.assign(new Error("Bad Request"), {
       response: {
-        status: 404,
+        status: status,
         data: {
           error: {
             message: err.message,
