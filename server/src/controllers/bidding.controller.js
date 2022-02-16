@@ -37,8 +37,8 @@ const getAutoBiddingStatus = async (req, res) => {
 const activateAutoBidding = async (req, res) => {
   try {
     const { userId, productId } = req.body;
-    const data = await biddingService.activateAutoBidding(userId, productId);
-    responseHandler(res, data, "Auto bidding activated successfully");
+    const result = await biddingService.activateAutoBidding(userId, productId);
+    responseHandler(res, result.data, result.message);
   } catch (err) {
     console.log(err);
     errorHandler(res, err);

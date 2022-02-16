@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+const { userService } = require(".");
 const { Product, User } = require("../models");
 const Bidding = require("../models/bidding.model");
 
@@ -24,7 +26,7 @@ const addBid = async (productId, userId, amount) => {
       status = 400;
       throw new Error("You are the highest bidder.");
     }
-    if (maxBid?.amount > amount || product.minimumBidAmount > amount) {
+    if (maxBid?.amount >= amount || product.minimumBidAmount >= amount) {
       status = 400;
       throw new Error("Bidding amount must be higher than last bid amount");
     }
@@ -36,19 +38,22 @@ const addBid = async (productId, userId, amount) => {
     if (bid) {
       const response = await bid.updateOne({ amount });
       if (response.modifiedCount) {
+        const updatedBid = await Bidding.findById(bid._id);
+        autoBidding(updatedBid);
         return {
-          data: bid,
+          data: updatedBid,
           message: "Product bid updated successfully",
         };
       }
     }
-    const data = Bidding.create({
+    const newBid = Bidding.create({
       productId,
       userId,
       amount,
     });
 
-    return { data, message: message };
+    autoBidding(newBid);
+    return { newBid, message: message };
   } catch (err) {
     throw Object.assign(new Error("Bad Request"), {
       response: {
@@ -166,62 +171,46 @@ const getAutoBiddingStatus = async (userId, productId) => {
   }
 };
 
-const autoBidding = async (userId, productId) => {
-  const product = await Product.findById(productId);
-  if (!product) {
-    throw Object.assign(new Error("Bad Request"), {
-      response: {
-        status: 404,
-        data: {
-          error: {
-            message: `Product not found`,
-          },
-        },
-      },
-    });
-  }
-
-  if (new Date(product.closeDate).getTime() < new Date().getTime()) {
-    throw Object.assign(new Error("Bad Request"), {
-      response: {
-        status: 400,
-        data: {
-          error: {
-            message: `Product bidding is closed`,
-          },
-        },
-      },
-    });
-  }
-
-  const bid = await Bidding.findOne({ productId, userId });
-  if (bid) {
-    const response = await bid.updateOne({ amount: product.minimumBidAmount });
-    if (response.modifiedCount) {
-      return {
-        data: {},
-        message: "Product bid updated successfully",
-      };
-    } else {
-      throw Object.assign(new Error("Bad Request"), {
-        response: {
-          status: 400,
-          data: {
-            error: {
-              message: `Product bid not updated`,
-            },
-          },
-        },
-      });
-    }
-  }
-  const data = Bidding.create({
-    productId,
-    userId,
-    amount: product.minimumBidAmount,
+const autoBidding = async (newBid) => {
+  const bid = await Bidding.findOne({
+    productId: newBid.productId,
+    isAutoBiddingEnabled: true,
+    userId: { $ne: newBid.userId },
   });
 
-  return { data, message: "Product bid added successfully" };
+  if (bid) {
+    const total = await getTotalSpendAmountByUser(bid.userId);
+    const { maxBidAmount } = await getMaxBidAmount(bid.userId);
+
+    if (total < maxBidAmount) {
+      const updatedAmount = newBid.amount + 1;
+      await bid.updateOne({ amount: updatedAmount });
+      await Product.findOne({ _id: newBid.productId }).updateOne({
+        lastBidAmount: updatedAmount,
+      });
+    } else {
+      bid.updateOne({ isAutoBiddingEnabled: false });
+    }
+  }
+};
+
+const getTotalSpendAmountByUser = async (userId) => {
+  const bids = await Bidding.aggregate([
+    {
+      $match: { userId: mongoose.Types.ObjectId(userId) },
+    },
+    {
+      $group: {
+        _id: "$userId",
+        total: { $sum: "$amount" },
+      },
+    },
+  ]);
+  return bids[0]?.total;
+};
+
+const getMaxBidAmount = async (userId) => {
+  return User.findById(mongoose.Types.ObjectId(userId), "maxBidAmount");
 };
 
 module.exports = {
@@ -230,4 +219,5 @@ module.exports = {
   autoBidding,
   activateAutoBidding,
   getAutoBiddingStatus,
+  getMaxBidAmount,
 };
