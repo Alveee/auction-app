@@ -96,7 +96,9 @@ const ProductDetail = (props) => {
                 <div className="row mt-4">
                   <div className="col-5">
                     <span>Last bid made</span>
-                    <p className="fs-3">${product.lastBidAmount}</p>
+                    <p className="fs-3">
+                      ${product.lastBidAmount ?? product.minimumBidAmount}
+                    </p>
                   </div>
                   <div className="col-7 text-end">
                     <Timer closeDate={product.closeDate} />
