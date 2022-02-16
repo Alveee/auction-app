@@ -8,7 +8,6 @@ import ProductService from "../services/product";
 import useUser from "../components/useUser";
 
 const ProductDetail = (props) => {
-  console.log(props);
   const { slug } = useParams();
   const { user } = useUser();
   const [product, setProduct] = useState({});
@@ -153,6 +152,8 @@ const ProductDetail = (props) => {
       </div>
       <Modal show={showModal}>
         <PlaceBidModal
+          user={user}
+          product={product}
           handleClose={hideModal}
           minimumBidAmount={product.lastBidAmount ?? product.minimumBidAmount}
         />
