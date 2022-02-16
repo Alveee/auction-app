@@ -23,6 +23,17 @@ const getMaxBid = async (req, res) => {
   }
 };
 
+const getAutoBiddingStatus = async (req, res) => {
+  try {
+    const { userId, productId } = req.query;
+    const result = await biddingService.getAutoBiddingStatus(userId, productId);
+    responseHandler(res, result.data, result.message);
+  } catch (err) {
+    console.log(err);
+    errorHandler(res, err);
+  }
+};
+
 const activateAutoBidding = async (req, res) => {
   try {
     const { userId, productId } = req.body;
@@ -53,5 +64,6 @@ module.exports = {
   addBid,
   getMaxBid,
   activateAutoBidding,
+  getAutoBiddingStatus,
   configureAutoBidding,
 };

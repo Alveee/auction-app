@@ -36,7 +36,10 @@ const addBid = async (productId, userId, amount) => {
     if (bid) {
       const response = await bid.updateOne({ amount });
       if (response.modifiedCount) {
-        message = "Product bid updated successfully";
+        return {
+          data: bid,
+          message: "Product bid updated successfully",
+        };
       }
     }
     const data = Bidding.create({
@@ -87,41 +90,75 @@ const getMaxBid = async (productId) => {
 };
 
 const activateAutoBidding = async (userId, productId) => {
-  const user = await User.findById(userId);
-  if (!user) {
+  let status;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      status = 404;
+      throw new Error("User not foud");
+    }
+
+    const product = await Product.findById(productId);
+    if (!product) {
+      status = 404;
+      throw new Error("Product not foud");
+    }
+
+    if (new Date(product.closeDate).getTime() < new Date().getTime()) {
+      status = 400;
+      throw new Error("Product bidding is closed");
+    }
+
+    const bid = await Bidding.findOne({ productId, userId });
+    if (!bid) {
+      status = 400;
+      throw new Error("Place a bid first to activate auto-bidding");
+    }
+    const result = await bid.updateOne({ isAutoBiddingEnabled: true });
+    if (result.modifiedCount) {
+      const updatedBid = await Bidding.findById(bid._id);
+      return {
+        data: updatedBid,
+        message: "Auto-bidding has been activated successfully",
+      };
+    }
+    return {
+      data: {},
+      message: "Failed to activate auto-bidding",
+    };
+  } catch (err) {
     throw Object.assign(new Error("Bad Request"), {
       response: {
-        status: 404,
+        status: status,
         data: {
           error: {
-            message: `User not found`,
+            message: err.message,
           },
         },
       },
     });
   }
+};
 
-  const product = await Product.findById(productId);
-  if (!product) {
+const getAutoBiddingStatus = async (userId, productId) => {
+  let status;
+  try {
+    const bid = await Bidding.findOne({ productId, userId });
+    if (!bid) {
+      status = 400;
+      throw new Error("No status found");
+    }
+    return {
+      data: bid,
+      message: "Retrieve auto bidding status",
+    };
+  } catch (err) {
     throw Object.assign(new Error("Bad Request"), {
       response: {
-        status: 404,
+        status: status,
         data: {
           error: {
-            message: `Product not found`,
-          },
-        },
-      },
-    });
-  }
-
-  if (new Date(product.closeDate).getTime() < new Date().getTime()) {
-    throw Object.assign(new Error("Bad Request"), {
-      response: {
-        status: 400,
-        data: {
-          error: {
-            message: `Product bidding is closed`,
+            message: err.message,
           },
         },
       },
@@ -192,4 +229,5 @@ module.exports = {
   getMaxBid,
   autoBidding,
   activateAutoBidding,
+  getAutoBiddingStatus,
 };

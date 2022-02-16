@@ -19,7 +19,10 @@ router.route("/products/:slug").get(productController.getProduct);
 router.route("/products/:slug/bids").post(biddingController.addBid);
 router.route("/products/:productId/bids/max").get(biddingController.getMaxBid);
 router
-  .route("/products/:slug/activate/auto-bidding")
+  .route("/products/activate/auto-bidding")
+  .get(biddingController.getAutoBiddingStatus);
+router
+  .route("/products/activate/auto-bidding")
   .post(biddingController.activateAutoBidding);
 router.route("/users/profile/settings").put(userController.updateSettings);
 
