@@ -10,7 +10,7 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     AuthService.login({ email, password }).then((response) => {
-      setUser(response.data.data);
+      setUser(response.data.data.user);
     });
   };
   return (

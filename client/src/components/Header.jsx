@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useUser from "./useUser";
 const Header = () => {
   const { user, removeUser } = useUser();
-  const profile = user.user;
+
   return (
     <nav className="navbar navbar-expand-md navbar-light">
       <div className="container">
@@ -31,13 +31,13 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav ms-auto mb-2 mb-md-0">
             <li className="nav-item">
-              <div class="dropdown">
+              <div className="dropdown">
                 <button
                   type="button"
                   className="btn btn-light dropdown-toggle bg-transparent"
                   data-bs-toggle="dropdown"
                 >
-                  <span className="me-3">{profile.name}</span>
+                  <span className="me-3">{user.name}</span>
                   <img
                     className="rounded-circle"
                     src="images/default-user-image.png"
@@ -46,11 +46,14 @@ const Header = () => {
                     height="32"
                   />
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton1"
+                >
                   <li>
                     <Link
                       to="/user/profile/settings"
-                      class="dropdown-item"
+                      className="dropdown-item"
                       href="#"
                     >
                       Settings
@@ -58,7 +61,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      class="dropdown-item"
+                      className="dropdown-item"
                       onClick={(e) => {
                         removeUser();
                         window.location.reload();

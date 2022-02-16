@@ -9,6 +9,7 @@ const login = async (email, password) => {
     const data = {
       accessToken: `token${user._id}`,
       user: {
+        userId: user._id,
         name: user.name,
         email: user.email,
         maxBidAmount: user.maxBidAmount,
