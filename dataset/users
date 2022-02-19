@@ -1,0 +1,24 @@
+[{
+  "_id": {
+    "$oid": "620bb5bfa66828576c74c8ce"
+  },
+  "name": "John",
+  "email": "user1@gmail.com",
+  "password": "123456",
+  "maxBidAmount": 100,
+  "bidAlertPercentage": 90,
+  "__v": 0,
+  "updatedAt": {
+    "$date": "2022-02-16T16:10:53.770Z"
+  }
+},{
+  "_id": {
+    "$oid": "620bbb4e4f37b2985c2ad9d4"
+  },
+  "name": "Zahid Hasan",
+  "email": "user2@gmail.com",
+  "password": "123456",
+  "maxBidAmount": 100,
+  "bidAlertPercentage": 90,
+  "__v": 0
+}]

@@ -1,0 +1,131 @@
+[{
+  "_id": {
+    "$oid": "620bc2f326d95ddd4be6cd23"
+  },
+  "title": "Product 1",
+  "slug": "product-1",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 10,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:50:25.487Z"
+  },
+  "lastBidAmount": 31
+},{
+  "_id": {
+    "$oid": "620d7f7025332e080e591c35"
+  },
+  "title": "Product 2",
+  "slug": "product-2",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 10,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  },
+  "lastBidAmount": 33
+},{
+  "_id": {
+    "$oid": "62106d23d22b13403838deb9"
+  },
+  "title": "Product 3",
+  "slug": "product-3",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 15,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+},{
+  "_id": {
+    "$oid": "62106d5fd22b13403838deba"
+  },
+  "title": "Product 4",
+  "slug": "product-4",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 15,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+},{
+  "_id": {
+    "$oid": "62106d6ad22b13403838debb"
+  },
+  "title": "Product 5",
+  "slug": "product-5",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 15,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+},{
+  "_id": {
+    "$oid": "62106d7ed22b13403838debc"
+  },
+  "title": "Product 6",
+  "slug": "product-6",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 15,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+},{
+  "_id": {
+    "$oid": "62106d8bd22b13403838debd"
+  },
+  "title": "Product 7",
+  "slug": "product-7",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 15,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+},{
+  "_id": {
+    "$oid": "62106d9fd22b13403838debe"
+  },
+  "title": "Product 8",
+  "slug": "product-8",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nTristique nunc convallis in blandit porttitor vitae ridiculus\npellentesque feugiat. Neque suspendisse adipiscing non in\ndapibus mauris mi dignissim aliquam. Vulputate diam nisi,\nlaoreet tellus semper mauris, nibh. \n\nimage\nEnim feugiat accumsan adipiscing ultrices id viverra\nvolutpat. Odio magna volutpat turpis felis. Interdum metus\nultricies diam egestas volutpat turpis id odio. Suspendisse\ndonec adipiscing sed semper risus nibh ultrices mollis.\nMalesuada nec vel risus porttitor proin. Nibh vulputate\ncongue convallis scelerisque diam quis quis interdum",
+  "minimumBidAmount": 13,
+  "image": "https://www.unityhighschool.org/wp-content/uploads/2014/08/default-placeholder.png",
+  "closeDate": {
+    "$date": "2022-02-17T22:00:00Z"
+  },
+  "createdAt": "2022-02-15",
+  "updatedAt": {
+    "$date": "2022-02-16T23:52:07.365Z"
+  }
+}]

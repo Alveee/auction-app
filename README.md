@@ -26,6 +26,8 @@ https://docs.atlas.mongodb.com/getting-started/
 
 After creating cluster and database, you'll get a connection string. Copy this string and set this value to `ATLAS_URI` key in `.env` file into `server` folder.
 
+Import the `products.json` and `user.json` from the dataset folder to your database.
+
 ### Frontend Installation
 
 After cloning the project
